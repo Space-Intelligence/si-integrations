@@ -11,6 +11,8 @@ lint FILES=".":
     uv run ruff format {{FILES}} --check
     uv run ruff check {{FILES}}
 setup:
-    uv sync --all-groups --locked
+    uv sync --group dev --locked
+setup-app GROUP:
+    uv sync --group dev --group {{GROUP}} --locked
 test:
-    uv run pytest -vv
+    uv run pytest -vv || if [ "$?" -eq 5 ]; then echo "No tests collected yet"; else exit "$?"; fi
