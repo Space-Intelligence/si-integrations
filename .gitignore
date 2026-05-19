@@ -8,3 +8,8 @@ coverage.xml
 dist/
 *.egg-info/
 .env
+
+# JetBrains IDE settings
+.idea/
+*.iml
+
