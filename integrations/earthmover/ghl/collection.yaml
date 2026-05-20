@@ -1,0 +1,190 @@
+gcp_project_id: si-gee-trial
+id: global-harmonised-layers
+title: Global Harmonised Layers (GHL)
+description: Harmonised landcover, deforestation by year, and aboveground forest carbon storage layers at 30m. Global terrestrial coverage excluding poles and oceanic islands.
+keywords:
+- Landcover
+- Deforestation
+- Forest Carbon
+- Space Intelligence
+license: CC-BY-NC-4.0
+providers:
+- name: Space Intelligence
+  description: Nature mapping and monitoring service provider.
+  roles:
+  - licensor
+  - producer
+  - processor
+  url: https://www.space-intelligence.com
+
+dates:
+- start: '2011-01-01T00:00:00+00:00'
+  end: '2024-12-31T23:59:59+00:00'
+
+bbox:
+- - -180
+  - -60
+  - 180
+  - 80
+
+crs: EPSG:4326
+
+item_assets:
+  deforestation:
+    title: Deforestation
+    description: Record of historical deforestation. Pixel values indicate the year of forest loss in the event that deforestation has occurred. E.g. a value of 23 means gross forest loss occurred during calendar year 2023. Both "No deforestation observed since 2011" and "No data" are represented by 0. Use the land cover layer to disambiguate these states.
+    roles:
+    - data
+    unit: Year
+    nodata: 0
+    data_type: uint8
+    spatial_resolution: 30
+    sampling: area
+    continuous_display: null
+    classification:
+    - description: '2011'
+      name: '2011'
+      value: 11
+      color_hint: 'FFF7BC'
+    - description: '2012'
+      name: '2012'
+      value: 12
+      color_hint: 'FEE391'
+    - description: '2013'
+      name: '2013'
+      value: 13
+      color_hint: 'FEC44F'
+    - description: '2014'
+      name: '2014'
+      value: 14
+      color_hint: 'FE9929'
+    - description: '2015'
+      name: '2015'
+      value: 15
+      color_hint: 'EC7014'
+    - description: '2016'
+      name: '2016'
+      value: 16
+      color_hint: 'CC4C02'
+    - description: '2017'
+      name: '2017'
+      value: 17
+      color_hint: 'B03007'
+    - description: '2018'
+      name: '2018'
+      value: 18
+      color_hint: '993404'
+    - description: '2019'
+      name: '2019'
+      value: 19
+      color_hint: '8B0000'
+    - description: '2020'
+      name: '2020'
+      value: 20
+      color_hint: '7A0000'
+    - description: '2021'
+      name: '2021'
+      value: 21
+      color_hint: '680000'
+    - description: '2022'
+      name: '2022'
+      value: 22
+      color_hint: '520000'
+    - description: '2023'
+      name: '2023'
+      value: 23
+      color_hint: '3D0000'
+    - description: '2024'
+      name: '2024'
+      value: 24
+      color_hint: '1A0000'
+
+  forest_carbon:
+    title: Forest Carbon
+    description: Per pixel estimated Forest Above-Ground Carbon (AGC), tonnes carbon.
+      / ha (tC/ha)
+    roles:
+    - data
+    unit: tC/ha
+    nodata: 0
+    data_type: uint16
+    spatial_resolution: 30
+    sampling: area
+    classification: null
+    continuous_display:
+      min: 0
+      max: 455
+      palette: viridis
+  land_cover:
+    title: Land Cover
+    description: 10-class land cover map.
+    roles:
+    - data
+    unit: Categorical
+    nodata: 0
+    data_type: uint8
+    spatial_resolution: 30
+    sampling: area
+    continuous_display: null
+    classification:
+    - description: Tree Cover
+      name: tree_cover
+      value: 1
+      color_hint: '234626'
+    - description: Mangrove
+      name: mangrove
+      value: 2
+      color_hint: '236656'
+    - description: Plantation
+      name: plantation
+      value: 3
+      color_hint: '7E52B6'
+    - description: Grassland and shrubland
+      name: grassland_shrubland
+      value: 4
+      color_hint: 'F0E442'
+    - description: Cropland
+      name: cropland
+      value: 5
+      color_hint: 'F8AC6B'
+    - description: Built-Up
+      name: built_up
+      value: 6
+      color_hint: 'B4B4B4'
+    - description: Bare and sparse vegetation
+      name: bare_sparse_vegetation
+      value: 7
+      color_hint: 'B4B4B4'
+    - description: Snow and ice
+      name: snow_ice
+      value: 8
+      color_hint: 'DDDDDD'
+    - description: Water
+      name: water
+      value: 9
+      color_hint: '468FAF'
+    - description: Flooded non-forest vegetation
+      name: flooded_non_forest_vegetation
+      value: 10
+      color_hint: 'FFFF8C'
+
+    si:
+      groups:
+      - name: forest
+        title: Forest
+        values:
+        - 1
+        - 2
+        - 3
+        color_hint: '457428'
+      - name: non-forest
+        title: Non-Forest
+        values:
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+        - 10
+        color_hint: 'CA803A'

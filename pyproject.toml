@@ -12,14 +12,19 @@ dev = [
   "pytest-cov",
   "ruff",
 ]
-# Dependencies for integrations/earthmover/ghl notebooks and conversion scripts.
-earthmover-ghl = [
+# Dependencies for integrations/earthmover notebooks and conversion scripts.
+earthmover = [
+  "azure-storage-blob",
+  "azure-identity",
   "dask[array]",
   "icechunk",
   "ipykernel",
   "numpy",
   "pandas",
+  "pyyaml",
+  "rioxarray",
   "xarray",
+  "odc-geo",
 ]
 [tool.ruff]
 target-version = "py312"
