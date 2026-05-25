@@ -1,7 +1,12 @@
-gcp_project_id: si-gee-trial
+# Copied and extended from Spatio. Corrects some historical issues and adapts data description to
+
 id: global-harmonised-layers
 title: Global Harmonised Layers (GHL)
-description: Harmonised landcover, deforestation by year, and aboveground forest carbon storage layers at 30m. Global terrestrial coverage excluding poles and oceanic islands.
+description: >-
+  Harmonised landcover, deforestation by year, and aboveground forest carbon storage layers at 30m.
+  Global terrestrial coverage excluding poles and oceanic islands.
+
+
 keywords:
 - Landcover
 - Deforestation
@@ -32,16 +37,20 @@ crs: EPSG:4326
 item_assets:
   deforestation:
     title: Deforestation
-    description: Record of historical deforestation. Pixel values indicate the year of forest loss in the event that deforestation has occurred. E.g. a value of 23 means gross forest loss occurred during calendar year 2023. Both "No deforestation observed since 2011" and "No data" are represented by 0. Use the land cover layer to disambiguate these states.
+    description: Record of historical deforestation. Pixel values indicate the year of forest loss in the event that deforestation has occurred. E.g. a value of 23 means gross forest loss occurred during calendar year 2023.
     roles:
     - data
     unit: Year
-    nodata: 0
+    nodata: 255
     data_type: uint8
     spatial_resolution: 30
     sampling: area
     continuous_display: null
     classification:
+    - description: No deforestation observed since 2011
+      name: no_deforestation
+      value: 0
+      color_hint: 'FFFFFF'
     - description: '2011'
       name: '2011'
       value: 11
@@ -106,7 +115,7 @@ item_assets:
     roles:
     - data
     unit: tC/ha
-    nodata: 0
+    nodata: 65535
     data_type: uint16
     spatial_resolution: 30
     sampling: area
@@ -115,55 +124,56 @@ item_assets:
       min: 0
       max: 455
       palette: viridis
+
   land_cover:
     title: Land Cover
     description: 10-class land cover map.
     roles:
     - data
     unit: Categorical
-    nodata: 0
+    nodata: 255
     data_type: uint8
     spatial_resolution: 30
     sampling: area
     continuous_display: null
     classification:
-    - description: Tree Cover
+    - description: Land with tree canopy cover >10%, that is not mangrove or plantation
       name: tree_cover
       value: 1
       color_hint: '234626'
-    - description: Mangrove
+    - description: Areas of Mangrove
       name: mangrove
       value: 2
       color_hint: '236656'
-    - description: Plantation
+    - description: Tree crop and Timber/lumber plantations.
       name: plantation
       value: 3
       color_hint: '7E52B6'
-    - description: Grassland and shrubland
+    - description: Shrubland or grassland dominated land. If trees are present, the tree canopy cover is less than 10%
       name: grassland_shrubland
       value: 4
       color_hint: 'F0E442'
-    - description: Cropland
+    - description: Herbaceous crops
       name: cropland
       value: 5
       color_hint: 'F8AC6B'
-    - description: Built-Up
+    - description: Bare urban or built surfaces; roads
       name: built_up
       value: 6
       color_hint: 'B4B4B4'
-    - description: Bare and sparse vegetation
+    - description: Land with vegetation covering less than 10% of the pixel surface, that is not permanently covered in snow or ice
       name: bare_sparse_vegetation
       value: 7
       color_hint: 'B4B4B4'
-    - description: Snow and ice
+    - description: Land permanently covered in snow or ice
       name: snow_ice
       value: 8
       color_hint: 'DDDDDD'
-    - description: Water
+    - description: Permanent water bodies. Includes rivers, lakes, and seas
       name: water
       value: 9
       color_hint: '468FAF'
-    - description: Flooded non-forest vegetation
+    - description: Areas of permanently or near-permanently flooded vegetation, with less than 10% tree canopy cover
       name: flooded_non_forest_vegetation
       value: 10
       color_hint: 'FFFF8C'

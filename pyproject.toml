@@ -16,7 +16,11 @@ dev = [
 earthmover = [
   "azure-storage-blob",
   "azure-identity",
+  "bokeh>=3.1.0",
+  "matplotlib",
+  "coiled",
   "dask[array]",
+  "distributed",
   "icechunk",
   "ipykernel",
   "numpy",
