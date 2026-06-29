@@ -96,7 +96,7 @@ ds
 
 ## Licence
 
-Licensed under CC-BY-NC-4.0
+Licensed under CC-BY-NC-SA-4.0
 
 ## Acknowledgements
 
