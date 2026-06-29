@@ -3,7 +3,7 @@
 id: global-harmonised-layers
 title: Global Harmonised Layers (GHL)
 description: >-
-  Harmonised landcover, deforestation by year, and aboveground forest carbon storage layers at 30m.
+  Harmonised landcover, deforestation, and aboveground forest carbon.
   Global terrestrial coverage excluding poles and oceanic islands.
 
 
@@ -103,10 +103,6 @@ item_assets:
       name: '2023'
       value: 23
       color_hint: '3D0000'
-    - description: '2024'
-      name: '2024'
-      value: 24
-      color_hint: '1A0000'
 
   forest_carbon:
     title: Forest Carbon
