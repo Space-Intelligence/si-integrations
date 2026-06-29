@@ -102,7 +102,7 @@ Licensed under CC-BY-NC-SA-4.0
 
 Please cite Space Intelligence:
 
-> Global Harmonised Layers (GHL), Space Intelligence (https://www.space-intelligence.com), Licensed under CC-BY-NC-4.0
+> Global Harmonised Layers (GHL), Space Intelligence (https://www.space-intelligence.com), Licensed under CC-BY-NC-SA-4.0
 
 This dataset is built upon open datasets that carry attribution requirements. When redistributing or publishing results derived from this product, the following attribution text must be included:
 
