@@ -1,19 +1,39 @@
 # Global Harmonised Layers (GHL)
 
-Space Intelligence's Global Harmonised Layers provide a consistent, analysis-ready suite of 30 m resolution maps covering land cover, historical deforestation, and aboveground forest carbon storage. The layers are harmonised in the sense that they are on a common grid, target a common year, and are thematically consistent e.g., only forest land cover classes have forest carbon greater than zero, and recently deforested areas are not classified as forest.
+Global Harmonised Layers is a "Screening Grade" suite of 30 m resolution land cover, deforestation, and aboveground forest carbon maps. The layers are harmonised in the sense that they are on a common grid, target a common year, and are thematically consistent i.e. only forest land cover classes have forest carbon greater than zero, and recently deforested areas are not classified as forest.
 
-Global terrestrial coverage at (EPSG:4326, ~30 m resolution), and is updated annually.
+This product is derived from multiple open datasets.
+
+## Spatial Coverage
+Global terrestrial coverage at (EPSG:4326, ~30 m pixels). 
+
+![Spatial Coverage](https://spaceintelliexternal.blob.core.windows.net/public/static/earthmover/ghl/spatial_extent.png)
+
+## Temporal Coverage
+
+Maps are available from 2024 onwards. Historical deforestation is included from 2011. 
+The 2024 maps nominally target 1st January 2024. There was a method change for 2025 and later maps which instead target year end e.g. the 2025 data nominally targets 31st December 2025.
+
+The "current year-2" maps are available here. Please contact Space Intelligence if you are interested in licensing more recent data.
+
+## Updates
+
+Annual updates are published around June. Each update prioritizes fit-for-purpose maps for that year and depends on what is available in the wider data ecosystem at that time. These updates will involve changes to input sources and processing methods. Older years will not be systematically reprocessed therefore there should be no expectation of a stable time series.
 
 ## Data Variables
 
 ### `land_cover` (categorical, uint8)
-A 10-class land cover map for 2024. Pixel values identify the dominant land cover type within each 30 m pixel.
+
+A 10-class land cover map. Pixel values identify the dominant land cover type within each 30 m pixel.
+
+![Land Cover](https://spaceintelliexternal.blob.core.windows.net/public/static/earthmover/ghl/land_cover.png)
+
 
 | Value | Class | Description |
 |-------|-------|-------------|
 | 1 | Tree cover | Land with tree canopy cover >10%, not mangrove or plantation |
 | 2 | Mangrove | Areas of mangrove |
-| 3 | Plantation | Tree crop and timber/lumber plantations |
+| 3 | Plantation | Tree crop and timber plantations |
 | 4 | Grassland/shrubland | Shrubland or grassland; tree canopy cover <10% if present |
 | 5 | Cropland | Herbaceous crops |
 | 6 | Built-up | Bare urban or built surfaces; roads |
@@ -24,16 +44,22 @@ A 10-class land cover map for 2024. Pixel values identify the dominant land cove
 | 255 | Nodata | Outside mapped extent |
 
 ### `deforestation` (year of loss, uint8)
+
 A record of historical deforestation since 2011. Pixel values indicate the two-digit year in which forest loss occurred. A value of 0 means no deforestation has been observed since 2011.
+
+![Deforestation](https://spaceintelliexternal.blob.core.windows.net/public/static/earthmover/ghl/deforestation.png)
 
 | Value | Description |
 |-------|-------------|
-| 0 | No deforestation observed since 2011 |
-| 11–24 | Year of deforestation (e.g. 23 = deforested in 2023) |
-| 255 | Nodata — outside mapped extent |
+| 0     | No deforestation observed since 2011 |
+| 11+   | Year of deforestation (e.g. 23 = deforested in 2023) |
+| 255   | Nodata — outside mapped extent |
 
 ### `forest_carbon` (tC/ha, uint16)
-Per-pixel estimated forest aboveground carbon (AGC) for 2024, in tonnes of carbon per hectare. Values range from 0 to ~660 tC/ha.
+
+Estimated aboveground forest carbon (AGC), in tonnes of carbon per hectare. Values range from 0 to ~660 tC/ha.
+
+![Forest Carbon](https://spaceintelliexternal.blob.core.windows.net/public/static/earthmover/ghl/forest_carbon.png)
 
 | Value | Description                               |
 |-------|-------------------------------------------|
@@ -45,7 +71,7 @@ Per-pixel estimated forest aboveground carbon (AGC) for 2024, in tonnes of carbo
 
 **Appropriate uses:**
 - Orienting and contextualising nature-based solutions projects (REDD+, ARR, IFM, agriculture) within their landscape
-- Confirming broad land cover, land cover history, and carbon storage of a project area
+- Confirming broad land cover and carbon storage of a project area
 - Targeting suitable areas for new projects — e.g. non-forest areas with no recent deforestation (suitable for ARR)
 - Assessing deforestation rates and trends at district or regional scale
 
@@ -54,30 +80,29 @@ Per-pixel estimated forest aboveground carbon (AGC) for 2024, in tonnes of carbo
 - Precise forest area figures to compare against project documents — these layers do not follow country- or project-specific forest definitions
 - Creating alternative baselines to those from a project (e.g. assessing overcrediting in a REDD+ project)
 
-## Reading the Data
-
-The data is distributed as an IceChunk store on Azure Blob Storage, accessible as a Zarr-backed xarray Dataset.
+## Data access
 
 ```python
-import icechunk as ic
+from arraylake import Client
 import xarray as xr
 
-repo = ic.Repository.open(storage)
-ds = xr.open_dataset(
-    repo.readonly_session("main").store,
-    engine="zarr",
-    consolidated=False,
-)
-
-# Subset to an area of interest and a specific year
-aoi = ds.sel(x=slice(-80, -70), y=slice(10, 0), year=2024)
-aoi["land_cover"].plot.imshow()
+client = Client()
+repo = client.get_repo("space-intelligence/ghl")
+session = repo.readonly_session("main")
+store = session.store
+ds = xr.open_dataset(store, engine="zarr")
+ds
 ```
 
 ## Licence
 
-CC-BY-NC-4.0
+Licensed under CC-BY-NC-4.0
+
 ## Acknowledgements
+
+Please cite Space Intelligence:
+
+> Global Harmonised Layers (GHL), Space Intelligence (https://www.space-intelligence.com), Licensed under CC-BY-NC-4.0
 
 This dataset is built upon open datasets that carry attribution requirements. When redistributing or publishing results derived from this product, the following attribution text must be included:
 
